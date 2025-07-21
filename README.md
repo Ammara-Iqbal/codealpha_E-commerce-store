@@ -1,50 +1,100 @@
-# 🛍️ Simple E-commerce Store
-Welcome to the Simple E-commerce Store project! This repository hosts a basic yet functional e-commerce platform designed to showcase fundamental web development concepts using modern technologies. Users can browse products, add items to a shopping cart, view detailed product information, and process orders, all while managing their user accounts.
+# 🛒 Ammara Store – E-commerce Web Application
 
-# ✨ Features
-Our e-commerce store comes packed with essential functionalities to provide a smooth shopping experience:
+**Ammara Store** is a simple yet functional e-commerce web application built using Django for the backend and HTML, CSS, and Bootstrap for the frontend. It provides a user-friendly interface for customers to browse products, view details, add to cart, and place orders.
 
-Product Listings: 📦 A beautifully laid out catalog displaying all available products.
+---
 
-Product Details Page: 🔍 Dedicated pages for each product, offering in-depth descriptions, images, and pricing.
+## 📌 Description
 
-Shopping Cart: 🛒 An intuitive cart system allowing users to add, remove, and update quantities of items before checkout.
+This project simulates the core functionalities of a real-world e-commerce website. It includes features such as product listing, user authentication, cart management, and a checkout system. The platform is responsive, styled with Bootstrap, and includes a visually appealing homepage with product images and categories.
 
-Order Processing: 💳 Seamless flow for placing orders and managing transactions.
+---
 
-User Registration/Login: 🔐 Secure user authentication and authorization for personalized experiences.
+## 🛠️ Tech Stack
 
-# 🚀 Tech Stack
-This project leverages a robust combination of frontend and backend technologies to deliver a responsive and efficient application.
+### 🚀 Frontend
+- HTML5  
+- CSS3  
+- Bootstrap 5  
+- JavaScript (for dynamic behavior)
 
-# Frontend
-HTML5: For structuring the web content.
+### 🧠 Backend
+- Python  
+- Django Web Framework  
+- SQLite (Default Django database)
 
-CSS3: For styling and creating a visually appealing user interface.
+---
 
-JavaScript: For interactive elements and dynamic content updates.
+## 📁 Project Structure
 
-# Backend
-Django (Python): A high-level Python web framework that encourages rapid development and clean, pragmatic design.
+ecommerce-store/
+│
+├── ecommerce/ # Project-level settings and configurations
+│ ├── settings.py
+│ └── urls.py
+│
+├── store/ # Main application
+│ ├── models.py # Product, Cart, Order models
+│ ├── views.py # Core view logic
+│ ├── urls.py # URL patterns
+│ └── templates/ # HTML templates (home, product, cart, etc.)
+│ └── store/
+│ ├── home.html
+│ ├── product_detail.html
+│ ├── cart.html
+│ ├── checkout.html
+│
+├── static/ # Static files (CSS, JS, images)
+│ └── css/
+│ └── style.css
+│
+├── db.sqlite3 # SQLite database file
+├── manage.py # Django management script
+└── requirements.txt # Python package dependencies
 
-SQLite3: A lightweight, file-based database used for storing product, user, and order data. Perfect for development and small-scale deployments.
 
-# 📁 Project Structure
-The project is organized into a clear and logical structure, making it easy to navigate and understand.
+---
 
-ecommerce_store/ ├── ecommerce_store/ # Django project settings, URLs, etc. │ ├── pycache/ │ ├── init.py │ ├── asgi.py │ ├── settings.py # Main project settings │ ├── urls.py # Main URL configurations │ └── wsgi.py ├── env/ # Python Virtual Environment ├── media/ # Directory for user-uploaded media (e.g., product images) ├── static/ # Directory for static files (CSS, JS, images) ├── store/ # Django application for e-commerce logic │ ├── migrations/ │ ├── init.py │ ├── admin.py │ ├── apps.py │ ├── models.py # Database models (Products, Orders, Users) │ ├── tests.py │ ├── views.py # Logic for handling requests and rendering templates │ └── urls.py # App-specific URL configurations ├── db.sqlite3 # SQLite database file └── manage.py # Django's command-line utility for administrative tasks
+## ✨ Features
 
-# 🛠️ Local Setup
-python -m venv env .\env\Scripts\activate
+- 🏠 **Homepage** with background image and product cards  
+- 🛍️ **Product Detail View** with image, description, and price  
+- 🛒 **Shopping Cart** functionality with quantity update  
+- ✅ **User Registration/Login/Logout** system  
+- 💳 **Checkout page** for finalizing purchases  
+- 🔐 Protected views: only logged-in users can access cart and checkout  
+- 🧑‍💼 **Admin Panel** to manage products and orders  
+- 🎨 Styled with a formal and aesthetic theme
 
-Install dependencies: Install all required Python packages using pip. pip install -r requirements.txt Apply database migrations: python manage.py makemigrations python manage.py migrate Create a superuser (optional): This allows you to access the Django admin panel to manage products, users, and orders. python manage.py createsuperuser Follow the prompts to create your admin username, email, and password.
+---
 
-Run the development server: Start the Django development server.
+## 🌐 API Endpoints
 
+| Method | Endpoint              | Description                    |
+|--------|-----------------------|--------------------------------|
+| GET    | `/`                   | Homepage with products         |
+| GET    | `/product/<id>/`      | Product detail page            |
+| POST   | `/add-to-cart/`       | Add product to cart            |
+| GET    | `/cart/`              | View items in cart             |
+| GET/POST | `/checkout/`        | Checkout and order placement   |
+| GET    | `/login/`             | Login page                     |
+| GET    | `/register/`          | User registration              |
+| GET    | `/logout/`            | Logout                         |
+
+---
+
+## ⚙️ Local Setup Instructions
+python -m venv env
+source env/bin/activate   # On Windows: env\Scripts\activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
 
-The backend API will be accessible at http://127.0.0.1:8000/.
+Visit the application
+Open http://127.0.0.1:8000 in your browser.
 
+📜 License
+This project is licensed under the MIT License.
 
-# 📖 API Documentation (Swagger/OpenAPI)
-http://127.0.0.1:8000/docs/
