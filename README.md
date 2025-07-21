@@ -45,5 +45,6 @@ python manage.py runserver
 
 The backend API will be accessible at http://127.0.0.1:8000/.
 
+
 # 📖 API Documentation (Swagger/OpenAPI)
 http://127.0.0.1:8000/docs/
