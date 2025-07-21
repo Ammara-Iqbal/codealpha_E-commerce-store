@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ammara Store</title>
+  <!-- ✅ Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* ✅ Full-page background image */
+    body {
+      background-image: url("{% static 'images/bg.png' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* ✅ Mehroon hero overlay */
+    .hero {
+      background-color: rgba(128, 0, 0, 0.8);
+      color: white;
+      animation: heroFade 1s ease;
+    }
+
+    /* ✅ Product cards readable over background */
+    .card {
+      background-color: rgba(255, 255, 255, 0.95);
+      animation: fadeInUp 0.8s cubic-bezier(.39,.575,.565,1) both;
+    }
+
+    /* ✅ Keep images same size and nicely cropped */
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      transition: transform 0.3s;
+    }
+    .card-img-top:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 8px 24px 0 rgba(128,0,0,0.15);
+    }
+
+    /* ✅ Navy blue “View Details” button */
+    .btn-navy {
+      background-color: #001f3f;
+      color: white;
+      border: none;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-navy:hover {
+      background-color: #001737;
+      animation: pulse 0.5s;
+      box-shadow: 0 0 0 4px rgba(0,31,63,0.15);
+    }
+
+    /* Navbar brand bounce animation */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-8px);}
+    }
+    .navbar-brand {
+      animation: bounce 1.2s infinite;
+      animation-delay: 1s;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-size: 1.5rem;
+    }
+
+    /* Card fade-in animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Button pulse animation */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,31,63,0.4);}
+      70% { box-shadow: 0 0 0 10px rgba(0,31,63,0);}
+      100% { box-shadow: 0 0 0 0 rgba(0,31,63,0);}
+    }
+
+    /* Hero fade-in */
+    @keyframes heroFade {
+      from { opacity: 0; transform: scale(0.95);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    /* Footer style */
+    footer {
+      background: rgba(0,0,0,0.85);
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar with new name -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Ammara Store</a>
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <span class="navbar-text text-white me-2">Welcome, {{ user.username }}!</span>
+            </li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'view_cart' %}">Cart</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ✅ Hero section with overlay -->
+  <header class="hero text-center py-5 mb-4">
+    <div class="container">
+      <h1 class="fw-bold display-4 mb-3" style="letter-spacing:2px;">Welcome to Ammara Store!</h1>
+      <p class="lead fs-4">Find your favorite products and shop with ease!</p>
+    </div>
+  </header>
+
+  <!-- ✅ Product grid -->
+  <div class="container">
+    <div class="row">
+      {% for product in products %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow">
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+              <p class="card-text fw-bold">${{ product.price }}</p>
+              <a href="{% url 'product_detail' product.pk %}" class="btn btn-navy">View Details</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No products available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <footer class="text-white text-center py-3">
+    <div class="container">
+      &copy; {{ year|default:2025 }} Ammara Store
+    </div>

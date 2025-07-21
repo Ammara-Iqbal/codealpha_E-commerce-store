@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      min-height: 100vh;
+    }
+    .cart-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      padding: 2rem 2.5rem;
+    }
+    .cart-title {
+      color: #001f3f;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .cart-item {
+      border-bottom: 1px solid #e0e7ff;
+      padding: 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #f3f4f6;
+    }
+    .cart-summary {
+      margin-top: 2rem;
+      text-align: right;
+    }
+    .cart-total {
+      font-size: 1.5rem;
+      color: #b80000;
+      font-weight: 700;
+    }
+    .btn-navy {
+      background-color: #001f3f;
+      color: white;
+      border: none;
+      transition: background 0.2s;
+    }
+    .btn-navy:hover {
+      background-color: #001737;
+    }
+    .cart-links {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .cart-links a {
+      margin: 0 10px;
+      color: #001f3f;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .cart-links a:hover {
+      text-decoration: underline;
+      color: #b80000;
+    }
+  </style>
+</head>
+<body>
+  <div class="cart-container">
+    <h1 class="cart-title"><i class="bi bi-cart4"></i> Your Shopping Cart</h1>
+    {% if cart_items %}
+      {% for item in cart_items %}
+        <div class="cart-item">
+          {% if item.product.image %}
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-img">
+          {% else %}
+            <div class="cart-item-img d-flex align-items-center justify-content-center text-muted">
+              <span>No Image</span>
+            </div>
+          {% endif %}
+          <div>
+            <h5 class="mb-1">{{ item.product.name }}</h5>
+            <div>Quantity: <span class="fw-bold">{{ item.quantity }}</span></div>
+            <div>Price: ${{ item.product.price }}</div>
+            <div>Subtotal: <span class="fw-bold">${{ item.item_total }}</span></div>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="cart-summary">
+        <div class="cart-total">Total: ${{ total }}</div>
+        <a href="{% url 'checkout' %}" class="btn btn-navy btn-lg mt-3">
+          <i class="bi bi-credit-card"></i> Proceed to Checkout
+        </a>
+      </div>
+    {% else %}
+      <div class="alert alert-info text-center my-4">
+        <i class="bi bi-emoji-frown"></i> Your cart is empty.
+      </div>
+    {% endif %}
+    <div class="cart-links">
+      <a href="/"><i class="bi bi-house"></i> Continue Shopping</a>
+    </div>
+  </div>
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</body>
+</html>
